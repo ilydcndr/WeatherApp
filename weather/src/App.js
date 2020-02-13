@@ -9,16 +9,37 @@ class App extends Component {
     super(props);
     this.state={
       valueCity:"",
-      valueCountry:""
+      valueCountry:"",
+      location:""
   }}
 
-  getValue=e=>{
-    const city = e.target.elements.city.value;
-    const country = e.target.elements.country.value;
-    this.setState=({
-      valueCity:city ,
-      valueCountry:country
+  saveValue=(e,x)=>{
+    if(x==='city'){
+      this.setState({
+            valueCity:e.target.value
+      });
+    }
+     if(x==='country'){
+      this.setState({
+        valueCountry:e.target.value
+      },()=>{
+        console.log(this.state.valueCountry)
+      })
+    }
+  }
+
+  search=()=>{
+    this.setState({
+      location:`${this.state.valueCity},${this.state.valueCountry}`
+    },()=>{
+      console.log(this.state.location)
     })
+    setTimeout(() => {
+      this.setState({
+        valueCity:"",
+        valueCountry:""
+      })
+    }, 1);
   }
 
   getTime=()=>{
@@ -40,12 +61,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <InputComp getValue={this.getValue} city={this.state.valueCity} country={this.state.valueCountry}/>
-        <WeatherComp getTime={this.getTime} city={this.state.valueCity} country={this.state.valueCountry}/>
+        <InputComp saveValue={this.saveValue} search={this.search} valueCity={this.state.valueCity} valueCountry={this.state.valueCountry}/>
+        <WeatherComp getTime={this.getTime} location={this.state.location}/>
       </div>
     )
   }
 }
-
 
 export default App;
