@@ -1,13 +1,10 @@
 import React from 'react';
 
-function Weather() {
-    
-    const date = new date()
-        
+function Weather(props) {    
     return (
         <div> 
-            <h2>{date.}</h2>
-            <h2></h2>           
+            <h5 className="text-center mt-3">{props.getTime}</h5>
+                   
         </div>
     )
 }
