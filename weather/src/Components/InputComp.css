@@ -1,9 +1,9 @@
 Input{
     border:0px !important;
-    border-bottom:2px solid whitesmoke !important;
+    border-bottom:2px solid darkblue !important;
     border-radius: 0px !important;
     background-color: transparent !important;
-    color: white !important;
+    color: darkblue !important;
     font-family: 'Times New Roman', Times, serif !important;
     font-size: larger !important;
 
@@ -13,5 +13,5 @@ input:focus{
   box-shadow: none !important ;
 }
 ::placeholder{
-    color: white !important;
+    color: darkblue !important;
 }
