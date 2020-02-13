@@ -7,9 +7,19 @@ import "./App.css"
 class App extends Component {
   constructor(props){
     super(props);
-  }
+    this.state={
+      valueCity:"",
+      valueCountry:""
+  }}
 
-  
+  getValue=e=>{
+    const city = e.target.elements.city.value;
+    const country = e.target.elements.country.value;
+    this.setState=({
+      valueCity:city ,
+      valueCountry:country
+    })
+  }
 
   getTime=()=>{
     const d = new Date()
@@ -27,15 +37,11 @@ class App extends Component {
    )
   }
   
-
-
-
-
   render() {
     return (
       <div>
-        <InputComp/>
-        <WeatherComp getTime={this.getTime()}/>
+        <InputComp getValue={this.getValue} city={this.state.valueCity} country={this.state.valueCountry}/>
+        <WeatherComp getTime={this.getTime} city={this.state.valueCity} country={this.state.valueCountry}/>
       </div>
     )
   }
