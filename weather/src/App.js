@@ -4,19 +4,26 @@ import InputComp from './Components/InputComp'
 import WeatherComp from './Components/WeatherComp'
 import "./App.css"
 
+const API_Key="9ce4bf627d054fa1d54a5bddcbe59920"
+
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
       valueCity:"",
       valueCountry:"",
-      location:""
+      location:"",
+      description:"",
+      maxDeg:0,
+      minDeg:0,
+      aveDeg:0
   }}
 
   saveValue=(e,x)=>{
     if(x==='city'){
       this.setState({
             valueCity:e.target.value
+            
       });
     }
      if(x==='country'){
@@ -40,6 +47,18 @@ class App extends Component {
         valueCountry:""
       })
     }, 1);
+
+    let API=`https://api.openweathermap.org/data/2.5/weather?q=${this.state.valueCity},${this.state.valueCountry}&appid=${API_Key}`
+     fetch(API)
+     .then(response=>response.json())
+     .then(data=>{
+       this.setState({
+           description:data.weather[0].description,
+           aveDeg:Math.round(data.main.temp-273.15),
+           minDeg:Math.round(data.main.temp_min-273.15),
+           maxDeg:Math.round(data.main.temp_max -273.15)         
+       })
+     })
   }
 
   getTime=()=>{
@@ -52,7 +71,7 @@ class App extends Component {
     
     const getDay=array[day]
    return(
-    `${getDay},  ${dayNumber}.${month}.${year} |`
+    `${getDay},  ${dayNumber}.${month}.${year} `
    )
   }
 
@@ -65,13 +84,15 @@ class App extends Component {
       `${s}:${m}:${sn}`
     )
   }
+
+
   
   render() {
     return (
       <div>
         <h5 className="text-right mt-3 mr-5">{this.getHours()}</h5>
         <InputComp saveValue={this.saveValue} search={this.search} valueCity={this.state.valueCity} valueCountry={this.state.valueCountry}/>
-        <WeatherComp getTime={this.getTime} location={this.state.location}/>
+        <WeatherComp getTime={this.getTime} location={this.state.location} desc={this.state.description} aveDeg={this.state.aveDeg} minDeg={this.state.minDeg} maxDeg={this.state.maxDeg}/>
       </div>
     )
   }
