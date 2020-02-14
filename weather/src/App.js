@@ -16,7 +16,8 @@ class App extends Component {
       description:"",
       maxDeg:0,
       minDeg:0,
-      aveDeg:0
+      aveDeg:0,
+      initialSearch:false
   }}
 
   saveValue=(e,x)=>{
@@ -53,12 +54,13 @@ class App extends Component {
      .then(response=>response.json())
      .then(data=>{
        this.setState({
+           initialSearch:true,
            description:data.weather[0].description,
            aveDeg:Math.round(data.main.temp-273.15),
            minDeg:Math.round(data.main.temp_min-273.15),
            maxDeg:Math.round(data.main.temp_max -273.15)         
        })
-     })
+     }); 
   }
 
   getTime=()=>{
@@ -68,12 +70,13 @@ class App extends Component {
     const year=d.getFullYear()
     const day=d.getDay()
     const array=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-    
     const getDay=array[day]
    return(
     `${getDay},  ${dayNumber}.${month}.${year} `
    )
   }
+
+  
 
   getHours=()=>{
     const d = new Date()
@@ -92,7 +95,7 @@ class App extends Component {
       <div>
         <h5 className="text-right mt-3 mr-5">{this.getHours()}</h5>
         <InputComp saveValue={this.saveValue} search={this.search} valueCity={this.state.valueCity} valueCountry={this.state.valueCountry}/>
-        <WeatherComp getTime={this.getTime} location={this.state.location} desc={this.state.description} aveDeg={this.state.aveDeg} minDeg={this.state.minDeg} maxDeg={this.state.maxDeg}/>
+        <WeatherComp setInt={this.setInt} location={this.state.location} initialSearch={this.state.initialSearch} aveDeg={this.state.aveDeg} minDeg={this.state.minDeg} maxDeg={this.state.maxDeg} desc={this.state.description}/>
       </div>
     )
   }
