@@ -4,6 +4,8 @@ function Weather(props) {
 
   const weatherValues = (
     <div className="text-center">
+      <i class={`wi ${props.icon} display-2`}></i>
+      <h5 className="mt-3"></h5>
       <h5>{props.aveDeg}&deg;</h5>
       <h5>{props.minDeg}&deg; {props.maxDeg}&deg;</h5>
       <h5>{props.desc}</h5>
