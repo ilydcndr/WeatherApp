@@ -117,23 +117,26 @@ class App extends Component {
 
     let API=`https://api.openweathermap.org/data/2.5/weather?q=${this.state.valueCity},${this.state.valueCountry}&appid=${API_Key}`
      fetch(API)
-     .then(response=>response.json())
-     .then(data=>{
-      if (!data.ok) {
+     .then(response=>{
+      if (!response.ok) {
         alertify.confirm('Warning!', 'Please Enter Valid Location', function(){ alertify.success('Ok') }
       , function(){ alertify.error('Cancel')})
       }
-      else{
-      console.log(data)
-       this.getIcons(data.weather[0].id)
-       this.setState({
-           initialSearch:true,
-           description:data.weather[0].description,
-           aveDeg:Math.round(data.main.temp-273.15),
-           minDeg:Math.round(data.main.temp_min-273.15),
-           maxDeg:Math.round(data.main.temp_max -273.15)         
-       })
-     }}); }
+      else{response.json()
+        .then(data=>{
+          console.log(data)
+           this.getIcons(data.weather[0].id)
+           this.setState({
+               initialSearch:true,
+               description:data.weather[0].description,
+               aveDeg:Math.round(data.main.temp-273.15),
+               minDeg:Math.round(data.main.temp_min-273.15),
+               maxDeg:Math.round(data.main.temp_max -273.15)         
+           })
+         });      
+      }
+     })
+     }
   }
 
   getTime=()=>{
