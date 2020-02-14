@@ -4,6 +4,8 @@ import InputComp from './Components/InputComp'
 import WeatherComp from './Components/WeatherComp'
 import "./App.css"
 import "../node_modules/weather-icons/css/weather-icons.css"
+import * as alertify from 'alertifyjs'
+
 
 const API_Key="9ce4bf627d054fa1d54a5bddcbe59920"
 
@@ -80,7 +82,6 @@ class App extends Component {
  } 
 
 
-
   saveValue=(e,x)=>{
     if(x==='city'){
       this.setState({
@@ -98,6 +99,10 @@ class App extends Component {
   }
 
   search=()=>{
+    if(this.state.valueCity.length===0 ||this.state.valueCountry.length===0){
+      alertify.confirm('Warning!', 'Please Be Sure All Inputs Are Filled', function(){ alertify.success('Ok') }
+      , function(){ alertify.error('Cancel')})}
+    else {
     this.setState({
       location:`${this.state.valueCity},${this.state.valueCountry}`
     },()=>{
@@ -114,6 +119,11 @@ class App extends Component {
      fetch(API)
      .then(response=>response.json())
      .then(data=>{
+      if (!data.ok) {
+        alertify.confirm('Warning!', 'Please Enter Valid Location', function(){ alertify.success('Ok') }
+      , function(){ alertify.error('Cancel')})
+      }
+      else{
       console.log(data)
        this.getIcons(data.weather[0].id)
        this.setState({
@@ -123,7 +133,7 @@ class App extends Component {
            minDeg:Math.round(data.main.temp_min-273.15),
            maxDeg:Math.round(data.main.temp_max -273.15)         
        })
-     }); 
+     }}); }
   }
 
   getTime=()=>{
