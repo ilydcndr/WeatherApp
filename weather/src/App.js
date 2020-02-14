@@ -76,7 +76,11 @@ class App extends Component {
    )
   }
 
-  
+  componentDidMount(){
+    setInterval(() => {
+      this.getHours()
+    }, 1);
+  }
 
   getHours=()=>{
     const d = new Date()
@@ -88,14 +92,13 @@ class App extends Component {
     )
   }
 
-
-  
+ 
   render() {
     return (
       <div>
         <h5 className="text-right mt-3 mr-5">{this.getHours()}</h5>
         <InputComp saveValue={this.saveValue} search={this.search} valueCity={this.state.valueCity} valueCountry={this.state.valueCountry}/>
-        <WeatherComp setInt={this.setInt} location={this.state.location} initialSearch={this.state.initialSearch} aveDeg={this.state.aveDeg} minDeg={this.state.minDeg} maxDeg={this.state.maxDeg} desc={this.state.description}/>
+        <WeatherComp getTime={this.getTime} location={this.state.location} initialSearch={this.state.initialSearch} aveDeg={this.state.aveDeg} minDeg={this.state.minDeg} maxDeg={this.state.maxDeg} desc={this.state.description}/>
       </div>
     )
   }
