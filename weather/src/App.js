@@ -71,13 +71,13 @@ class App extends Component {
   saveValue = (e, x) => {
     if (x === "city") {
       this.setState({
-        valueCity: e.target.value
+        valueCity: e.target.value.charAt(0).toUpperCase()+ e.target.value.slice(1).toLowerCase()
       });
     }
     if (x === "country") {
       this.setState(
         {
-          valueCountry: e.target.value
+          valueCountry: e.target.value.charAt(0).toUpperCase()+ e.target.value.slice(1).toLowerCase()
         },
         () => {
           console.log(this.state.valueCountry);
